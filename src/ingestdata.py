@@ -1,0 +1,56 @@
+# print("Jay Ganesh")
+import os
+import zipfile
+from abc import ABC,abstractmethod
+import pandas as pd
+
+class DataIngestor(ABC):
+    @abstractmethod
+    def ingest(self,file_path)->pd.DataFrame:
+        pass
+
+class ZipDataIngestor(DataIngestor):
+    def ingest(self,file_path)->pd.DataFrame:
+        # Making sure that the file was zip file
+        if not file_path.endswith(".zip"):
+            raise ValueError("The provided file is not zip file")
+        # Extracting the zip file to folder named extracted_data
+        with zipfile.ZipFile(file_path,"r") as zip_ref:
+            zip_ref.extractall("extracted_data")
+        #Finding the extracted csv file
+        extracted_file=os.listdir("extracted_data")
+        csv_files=[f for f in extracted_file if f.endswith(".csv")]
+        #Making sure that there is only one csv file in that path
+        if len(csv_files)==0:
+            raise FileNotFoundError("No CSV file exist in that Folder")
+        if len(csv_files)>1:
+            raise ValueError("More than one csv file detected")
+        #Reading the csv file in pd.dataframe
+        csv_file_path=os.path.join("extracted_data",csv_files[0])
+        df=pd.read_csv(csv_file_path)
+        return df
+
+class DataIngestorFactory:
+    @staticmethod
+    def get_data_ingestor(file_extension:str)->DataIngestor:
+        #Here we will be returning proper DataIngestor as per file extension
+        if file_extension==".zip":
+            return ZipDataIngestor()
+        else:
+            raise ValueError(f"No ingestor available for file extension:{file_extension}")
+if __name__=="main":
+    # Specify the file path
+    file_path = "D:\Project1\House Price Prediction with Deployement\OurProject\data\archive.zip"
+
+    # Determine the file extension
+    file_extension = os.path.splitext(file_path)[1]
+
+    # Get the appropriate DataIngestor
+    data_ingestor = DataIngestorFactory.get_data_ingestor(file_extension)
+
+    # Ingest the data and load it into a DataFrame
+    df = data_ingestor.ingest(file_path)
+
+    # Now df contains the DataFrame from the extracted CSV
+    print(df.head())  # Display the first few rows of the DataFrame
+    pass
