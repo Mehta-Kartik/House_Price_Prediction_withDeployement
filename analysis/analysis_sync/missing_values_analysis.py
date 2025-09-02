@@ -1,4 +1,5 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
@@ -9,7 +10,7 @@ import seaborn as sns
 # This class defines a template for missing values analysis.
 # Subclasses must implement the methods to identify and visualize missing values.
 class MissingValuesAnalysisTemplate(ABC):
-    def analyze(self,df:pd.DataFrame):
+    def analyze(self, df: pd.DataFrame):
         """
         Performs a complete missing values analysis by identifying and visualizing missing values.
 
@@ -21,8 +22,9 @@ class MissingValuesAnalysisTemplate(ABC):
         """
         self.identify_missing_values(df)
         self.visualize_missing_values(df)
+
     @abstractmethod
-    def identify_missing_values(self,df):
+    def identify_missing_values(self, df: pd.DataFrame):
         """
         Identifies missing values in the dataframe.
 
@@ -33,8 +35,9 @@ class MissingValuesAnalysisTemplate(ABC):
         None: This method should print the count of missing values for each column.
         """
         pass
+
     @abstractmethod
-    def visualize_missing_values(self,df):
+    def visualize_missing_values(self, df: pd.DataFrame):
         """
         Visualizes missing values in the dataframe.
 
@@ -45,13 +48,13 @@ class MissingValuesAnalysisTemplate(ABC):
         None: This method should create a visualization (e.g., heatmap) of missing values.
         """
         pass
-    
 
-#Working on ConcreteMethod
 
-class simpleMissingValuesAnalysis(MissingValuesAnalysisTemplate):
-    def identify_missing_values(self,df:pd.DataFrame):
-        # return super().identify_missing_values()
+# Concrete Class for Missing Values Identification
+# -------------------------------------------------
+# This class implements methods to identify and visualize missing values in the dataframe.
+class SimpleMissingValuesAnalysis(MissingValuesAnalysisTemplate):
+    def identify_missing_values(self, df: pd.DataFrame):
         """
         Prints the count of missing values for each column in the dataframe.
 
@@ -64,8 +67,8 @@ class simpleMissingValuesAnalysis(MissingValuesAnalysisTemplate):
         print("\nMissing Values Count by Column:")
         missing_values = df.isnull().sum()
         print(missing_values[missing_values > 0])
-    def visualize_missing_values(self, df:pd.DataFrame):
-        # return super().visualize_missing_values(df)
+
+    def visualize_missing_values(self, df: pd.DataFrame):
         """
         Creates a heatmap to visualize the missing values in the dataframe.
 
@@ -75,9 +78,9 @@ class simpleMissingValuesAnalysis(MissingValuesAnalysisTemplate):
         Returns:
         None: Displays a heatmap of missing values.
         """
-        print("Visualizing Missing Values...")
-        plt.figure(figsize=(12,8))
-        sns.heatmap(df.isnull(),cbar=False,cmap='viridis')
+        print("\nVisualizing Missing Values...")
+        plt.figure(figsize=(12, 8))
+        sns.heatmap(df.isnull(), cbar=False, cmap="viridis")
         plt.title("Missing Values Heatmap")
         plt.show()
 

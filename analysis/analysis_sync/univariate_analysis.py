@@ -2,7 +2,7 @@ from abc import ABC,abstractmethod
 import matplotlib.pyplot as plt
 # import numpy as np
 import pandas as pd
-import searborn as sns
+import seaborn as sns
 
 
 # Abstract Base Class for Univariate Analysis Strategy

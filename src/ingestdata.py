@@ -38,9 +38,9 @@ class DataIngestorFactory:
             return ZipDataIngestor()
         else:
             raise ValueError(f"No ingestor available for file extension:{file_extension}")
-if __name__=="main":
+if __name__=="__main__":
     # Specify the file path
-    file_path = "D:\Project1\House Price Prediction with Deployement\OurProject\data\archive.zip"
+    file_path = r"D:\\Project1\\House Price Prediction with Deployement\\OurProject\\data\\archive.zip"
 
     # Determine the file extension
     file_extension = os.path.splitext(file_path)[1]

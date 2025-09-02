@@ -81,17 +81,17 @@ class DataInspector:
         None Executes the current strategy's inspection
         """
         self._strategy.inspect(df)
-if __name__=="main":
+if __name__=="__main__":
     # Example usage of the DataInspector with different strategies.
 
     # Load the data
-    # df = pd.read_csv('../extracted-data/your_data_file.csv')
+    df = pd.read_csv('D:\Project1\House Price Prediction with Deployement\OurProject\extracted_data\AmesHousing.csv')
 
     # Initialize the Data Inspector with a specific strategy
-    # inspector = DataInspector(DataTypesInspectionStrategy())
-    # inspector.execute_inspection(df)
+    inspector = DataInspector(DataTypeInspectionStrategy())
+    inspector.execute_inspection(df)
 
     # Change strategy to Summary Statistics and execute
-    # inspector.set_strategy(SummaryStatisticsInspectionStrategy())
-    # inspector.execute_inspection(df)
+    inspector.set_strategy(SummaryStatisticsInspectionStrategy())
+    inspector.execute_inspection(df)
     pass
